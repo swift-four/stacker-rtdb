@@ -54,6 +54,10 @@ export default class Profile extends Component {
 				{this.state.notes.map((note) => {
 					return <div key={note.note_id}>{note.content}</div>;
 				})}
+				<div>
+					<input onChange={this.handleChange} value={this.state.content} />
+					<button onClick={this.createNote}>Create Note</button>
+				</div>
 				<Footer />
 			</div>
 		);
