@@ -14,7 +14,7 @@ export default class Profile extends Component {
 	}
 
 	componentDidMount() {
-		db.ref(`all_notes/0001}`).on("value", (snapshot) => {
+		db.ref("all_notes/0001").on("value", (snapshot) => {
 			let allNotes = [];
 			snapshot.forEach((snap) => {
 				allNotes.push(snap.val());
@@ -22,6 +22,26 @@ export default class Profile extends Component {
 			this.setState({ notes: allNotes });
 		});
 	}
+
+	handleChange = (e) => {
+		this.setState({ content: e.target.value });
+	};
+
+	createNote = () => {
+		const uid = this.state.user.uid;
+		const { content } = this.state;
+		const note_id = `note-${Date.now()}`;
+
+		db.ref(`all_notes/${uid}/${note_id}`)
+			.set({
+				content,
+				note_id,
+				uid,
+			})
+			.then((_) => {
+				this.setState({ content: "" });
+			});
+	};
 
 	render() {
 		console.log(this.state.notes);
@@ -32,17 +52,7 @@ export default class Profile extends Component {
 					Logged in as: <strong>{this.state.user.email}</strong>
 				</div>
 				{this.state.notes.map((note) => {
-					return (
-						<div key={note.note_id}>
-							<p>{note.content}</p>
-							<button onClick={() => this.editNote(note.note_id)}>
-								Edit Note
-							</button>
-							<button onClick={() => this.deleteNote(note.note_id)}>
-								Delete
-							</button>
-						</div>
-					);
+					return <div key={note.note_id}>{note.content}</div>;
 				})}
 				<Footer />
 			</div>
