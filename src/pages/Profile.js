@@ -9,6 +9,7 @@ export default class Profile extends Component {
 		this.state = {
 			user: auth().currentUser,
 			notes: [],
+			content: "",
 		};
 	}
 
@@ -22,16 +23,40 @@ export default class Profile extends Component {
 		});
 	}
 
+	handleChange = (e) => {
+		this.setState({ content: e.target.value });
+	};
+
+	createNote = () => {
+		const uid = this.state.user.uid;
+		const { content } = this.state;
+		const note_id = `note-${Date.now()}`;
+
+		db.ref(`all_notes/${uid}/${note_id}`)
+			.set({
+				content,
+				note_id,
+				uid,
+			})
+			.then((_) => {
+				this.setState({ content: "" });
+			});
+	};
+
 	render() {
 		return (
 			<div>
 				<Header />
 				<div>
-					Login in as: <strong>{this.state.user.email}</strong>
+					Logged in as: <strong>{this.state.user.email}</strong>
 				</div>
 				{this.state.notes.map((note) => {
 					return <div key={note.note_id}>{note.content}</div>;
 				})}
+				<div>
+					<input onChange={this.handleChange} value={this.state.content} />
+					<button onClick={this.createNote}>Create Note</button>
+				</div>
 				<Footer />
 			</div>
 		);
