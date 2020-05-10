@@ -1,0 +1,39 @@
+
+calendarTitle = Levi's
+createdAt d = 2014-06-25
+user = 
+
+tasks
+  task-1
+    id = task-1
+    content = Instagram - 15:00pm
+  task-2
+    id = task-2
+    content = Facebook - 16:00pm
+  task-3
+    id = task-3
+    content = Instagram - 17:00pm
+  task-4
+    id = task-4
+    content = Twitter - 15:00pm
+
+columns
+  column-1
+    id = column-1
+    title = Monday 4th May
+    taskIds[] = task-1, task-2, task-3, task-4
+  column-2
+    id = column-2
+    title = Tuesday 5th May
+    taskIds[]
+  column-3
+    id = column-3
+    title = Wednesday 6th May
+    taskIds[]
+  column-4
+    id = column-4
+    title = Thursday 7th May
+    taskIds[]
+
+columnOrder[] = column-1, column-2, column-3, column-4
+
